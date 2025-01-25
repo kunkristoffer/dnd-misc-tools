@@ -1,10 +1,22 @@
 "use client";
 
 import { DnDItem, DnDItemId } from "@/types/dnd/items.types";
-import { addDoc, collection, doc, getDoc, getDocs, updateDoc, query } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+  query,
+  orderBy,
+  limit,
+  startAfter,
+} from "firebase/firestore";
 import { clientAuth, clientDB } from "../app";
 import { userCollection } from "./users";
 import { FirestoreUser } from "@/types/auth.types";
+import { GetAllItems } from "@/types/firestore.types";
 
 const itemCollection = collection(clientDB, "items");
 
@@ -42,9 +54,27 @@ export async function editItem(item: DnDItem, uid: string) {
   return { code: 200, data: result ?? item };
 }
 
-/* export async function getAllItems() {
-  // Todo: function to get all items from collection, paginated...
-} */
+export async function getAllItems({ dir, end, order = "name", start }: GetAllItems) {
+  // Create query
+  const q = query(itemCollection, orderBy(order), startAfter(start ?? 0), limit(50));
+
+  // Get current set of documents
+  const results = await getDocs(q);
+  const data = results.docs.map(item => {
+    return {id: item.id, ...item.data()} as DnDItem
+  })
+
+
+
+  // logic for pagination here :)
+
+  // return object
+  return {
+    page: 1,
+    available: 1,
+    data,
+  };
+}
 
 export async function getItemById(uid: DnDItemId) {
   try {
