@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import { Footer } from "@/components/elements/footer";
+import { Header } from "@/components/elements/header";
+import "@/assets/styles/global.css";
 
 export const metadata: Metadata = {
   title: "D&D Tools",
@@ -12,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="bg-background text-primary">
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -1,0 +1,54 @@
+[
+  {
+    "label": "home",
+    "href": "/"
+  },
+  {
+    "label": "Items",
+    "href": "/items",
+    "subMenu": [
+      {
+        "label": "Random",
+        "href": "/items/random"
+      },
+      {
+        "label": "Create",
+        "href": "/items/create"
+      },
+      {
+        "label": "List all",
+        "href": "/items/all/"
+      },
+      {
+        "label": "Search",
+        "href": "/items/search"
+      }
+    ]
+  },
+  {
+    "label": "Shop",
+    "href": "/shops",
+    "subMenu": [
+      {
+        "label": "Random",
+        "href": "/shops/random"
+      },
+      {
+        "label": "Create",
+        "href": "/shops/create"
+      },
+      {
+        "label": "List all",
+        "href": "/shops/all/"
+      },
+      {
+        "label": "Search",
+        "href": "/shops/search"
+      }
+    ]
+  },
+  {
+    "label": "about",
+    "href": "/about"
+  }
+]

@@ -1,0 +1,59 @@
+/* text color and borders */
+.mundane {
+  color: grey;
+  border-color: grey;
+  accent-color: grey;
+}
+.common {
+  color: grey;
+  border-color: grey;
+  accent-color: grey;
+}
+.uncommon {
+  color: #1fc43d;
+  border-color: #1fc43d;
+  accent-color: #1fc43d;
+}
+.rare {
+  color: #4990e2;
+  border-color: #4990e2;
+  accent-color: #4990e2;
+}
+.very-rare {
+  color: #9810e1;
+  border-color: #9810e1;
+  accent-color: #9810e1;
+}
+.legendary {
+  color: #fea42f;
+  border-color: #fea42f;
+  accent-color: #fea42f;
+}
+.artifact {
+  color: #be8a78;
+  border-color: #be8a78;
+  accent-color: #be8a78;
+}
+
+/* backgrounds */
+.mundane-bg {
+  background-color: grey;
+}
+.common-bg {
+  background-color: grey;
+}
+.uncommon-bg {
+  background-color: #1fc43d;
+}
+.rare-bg {
+  background-color: #4990e2;
+}
+.very-rare-bg {
+  background-color: #9810e1;
+}
+.legendary-bg {
+  background-color: #fea42f;
+}
+.artifact-bg {
+  background-color: #be8a78;
+}
