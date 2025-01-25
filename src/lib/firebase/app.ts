@@ -9,6 +9,6 @@ import { getAuth } from "firebase/auth";
 const clientApp = initializeApp(firebasePublicConfig);
 
 // Export firestore, firedb and firebase auth
-export const clientStore = getFirestore(clientApp);
-export const clientDB = getDatabase(clientApp);
+export const clientDB = getFirestore(clientApp);
+export const clientStorage = getDatabase(clientApp);
 export const clientAuth = getAuth(clientApp);
