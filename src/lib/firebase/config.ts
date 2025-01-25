@@ -4,5 +4,8 @@ export const firebasePublicConfig = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECTID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGEBUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGINGSENDERID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APPID,
+  appId:
+    process.env.NODE_ENV === "production"
+      ? process.env.NEXT_PUBLIC_FIREBASE_APPID_LIVE
+      : process.env.NEXT_PUBLIC_FIREBASE_APPID_PREVIEW,
 };
