@@ -1,7 +1,9 @@
 import { formAvailableRarity, formAvailableTypes } from "@/data/dnd/form";
-import { DocumentReference } from "firebase/firestore";
+import { DocumentReference, Timestamp } from "firebase/firestore";
+import { FirestoreUser } from "../auth.types";
 
 export type DnDItem = {
+  id?: string;
   name: string;
   attuned: boolean;
   rarity: DnDItemRarity;
@@ -10,12 +12,14 @@ export type DnDItem = {
   bases: string[];
   description: string;
   price: number;
-  source: string;
-  image: string;
-  createdBy?: DocumentReference;
-  createdAt?: Date;
-  updatedAt?: Date;
-  updatedBy?: string[];
+  source?: string;
+  image?: string;
+  createdBy?: FirestoreUser;
+  createdByRef?: DocumentReference;
+  createdAt?: Date | Timestamp;
+  updatedAt?: Date | Timestamp;
+  updatedBy?: FirestoreUser;
+  updatedByRef?: DocumentReference;
   homebrew?: boolean;
 };
 
