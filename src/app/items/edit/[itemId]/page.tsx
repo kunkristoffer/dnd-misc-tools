@@ -1,7 +1,7 @@
 "use client";
 
 import { formItemInit } from "@/data/dnd/form";
-import { createItem, editItem, getItemById } from "@/lib/firebase/firestore/items";
+import { editItem, getItemById } from "@/lib/firebase/firestore/items";
 import { DnDItem, DnDItemRarity, DnDItemTypes } from "@/types/dnd/items.types";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,15 +11,16 @@ export default function Page() {
   const uid = usePathname().split("/").pop();
 
   async function handleSave() {
-    const res = await createItem(item);
-    setItem((prev) => ({ ...prev, source: res.message as string }));
+    if (!uid || uid.length !== 20) return;
+    const res = await editItem(item, uid);
+    console.log(res);
   }
 
   useEffect(() => {
     async function update() {
       if (!uid || uid.length !== 20) return;
       const result = await getItemById(uid);
-      console.log(result);
+      if (result.data) setItem(result.data);
     }
     update();
   }, [uid]);
@@ -113,8 +114,9 @@ export default function Page() {
             </span>
           </div>
         </div>
-
-        <pre className="flex-1 py-1 px-2">{JSON.stringify(item, null, 2)}</pre>
+        <div className="flex-1 flex w-1/2">
+          <pre className="py-1 px-2 text-wrap">{JSON.stringify(item, null, 2)}</pre>
+        </div>
       </div>
     </main>
   );
