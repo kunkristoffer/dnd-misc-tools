@@ -6,7 +6,7 @@ import { InputNumber } from "@/components/ui/input/number";
 import { InputSelect } from "@/components/ui/input/select";
 import { InputText } from "@/components/ui/input/text";
 import { InputTextarea } from "@/components/ui/input/textarea";
-import { formAvailableRarity, formAvailableTypes, formItemInit } from "@/data/dnd/form";
+import { formAvailableRarity, formAvailableTypes, formGetSubTypes, formItemInit } from "@/data/dnd/form";
 import { deleteItem, editItem, getItemById } from "@/lib/firebase/firestore/items";
 import { DnDItem, DnDItemRarity, DnDItemTypes } from "@/types/dnd/items.types";
 import { usePathname, useRouter } from "next/navigation";
@@ -51,7 +51,6 @@ export default function Page() {
     }
     update();
   }, [uid]);
-
   return (
     <main>
       <div className="flex justify-between gap-12">
@@ -75,16 +74,18 @@ export default function Page() {
               label="Item type"
               value={item.type}
               options={formAvailableTypes}
-              onChange={(value) => setItem((prev) => ({ ...prev, type: value as DnDItemTypes }))}
+              onChange={(value) => setItem((prev) => ({ ...prev, type: value as DnDItemTypes, subType: [] }))}
             />
-            <InputSelect
-              name="subType"
-              label="Item subtype"
-              value={item.subType}
-              options={formAvailableTypes}
-              multiple
-              onChange={(value) => setItem((prev) => ({ ...prev, subType: value as string[] }))}
-            />
+            {item.type && (
+              <InputSelect
+                name="subType"
+                label="Item subtype"
+                value={item.subType}
+                options={formGetSubTypes(item.type)}
+                multiple
+                onChange={(value) => setItem((prev) => ({ ...prev, subType: value as string[] }))}
+              />
+            )}
             <span className="flex gap-2 w-full">
               <InputCheckbox
                 name="attuned"
