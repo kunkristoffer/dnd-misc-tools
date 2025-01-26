@@ -12,6 +12,7 @@ import {
   orderBy,
   limit,
   startAfter,
+  Timestamp,
 } from "firebase/firestore";
 import { clientAuth, clientDB } from "../app";
 import { userCollection } from "./users";
@@ -29,7 +30,7 @@ export async function createItem(item: DnDItem) {
     // add creator ref and timestamp as extra details
     if (!clientAuth.currentUser?.uid) return { code: 400, error: "Not authorized" };
     item.createdByRef = doc(userCollection, clientAuth.currentUser.uid);
-    item.createdAt = new Date();
+    item.createdAt = Timestamp.fromDate(new Date());
 
     // post item, return generated id
     const result = await addDoc(itemCollection, item);
@@ -48,7 +49,7 @@ export async function editItem(item: DnDItem, uid: string) {
   // add updated by ref and timestamp as extra details
   if (!clientAuth.currentUser?.uid) return { code: 400, error: "Not authorized" };
   item.updatedByRef = doc(userCollection, clientAuth.currentUser.uid);
-  item.updatedAt = new Date();
+  item.updatedAt = Timestamp.fromDate(new Date());
 
   const result = await updateDoc(docRef, item);
   return { code: 200, data: result ?? item };
@@ -98,8 +99,7 @@ export async function getItemById(uid: DnDItemId) {
       item.updatedBy = (await getDoc(item.updatedByRef)).data() as FirestoreUser;
       delete item.updatedByRef;
     }
-    console.log(item);
-    return { code: 200, data: item };
+    return { code: 200, data: item, message: "Updated succesfully" };
   } catch (err) {
     console.log(err);
     // catch and return server errors
