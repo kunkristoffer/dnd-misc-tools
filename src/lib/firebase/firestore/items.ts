@@ -2,7 +2,6 @@
 
 import { DnDItem, DnDItemId } from "@/types/dnd/items.types";
 import {
-  addDoc,
   collection,
   doc,
   getDoc,
@@ -13,6 +12,8 @@ import {
   limit,
   startAfter,
   Timestamp,
+  setDoc,
+  where,
 } from "firebase/firestore";
 import { clientAuth, clientDB } from "../app";
 import { userCollection } from "./users";
@@ -27,14 +28,23 @@ export async function createItem(item: DnDItem) {
     const validated = true;
     if (!validated) return { code: 400, error: validated };
 
+    // create doc ref
+    const newDoc = doc(itemCollection);
+
     // add creator ref and timestamp as extra details
     if (!clientAuth.currentUser?.uid) return { code: 400, error: "Not authorized" };
     item.createdByRef = doc(userCollection, clientAuth.currentUser.uid);
     item.createdAt = Timestamp.fromDate(new Date());
+    item._random = Math.floor(Math.random() * 100000000);
+    item._id = newDoc.id;
 
-    // post item, return generated id
-    const result = await addDoc(itemCollection, item);
-    return { code: 200, data: result.id };
+    try {
+      // post item, return generated id
+      await setDoc(newDoc, item);
+      return { code: 200, data: item };
+    } catch (err) {
+      return { code: 500, error: err };
+    }
   } catch (err) {
     // catch and return server errors
     return { code: 500, error: err };
@@ -62,7 +72,7 @@ export async function getAllItems({ order = "name", start }: GetAllItems) {
   // Get current set of documents
   const results = await getDocs(q);
   const data = results.docs.map((item) => {
-    return { id: item.id, ...item.data() } as DnDItem;
+    return { _id: item.id, ...item.data() } as DnDItem;
   });
 
   // logic for pagination here :)
@@ -114,3 +124,25 @@ export async function getItemById(uid: DnDItemId) {
 /* export async function getItemQuantityByRarity() {
   // Todo:
 } */
+
+export async function randomItem() {
+  // Generate random number for splitting collection
+  const seed = Math.floor(Math.random() * 100000000);
+
+  // Split collection @ seed, get [0]
+  const q = query(itemCollection, where("_random", "<=", seed), orderBy("_random"), limit(1));
+  const res = await getDocs(q);
+
+  // Return found, if none found, look in other direction
+  if (res.size > 0) {
+    return { code: 200, body: res.docs[0].data() as DnDItem, message: "first" };
+  } else {
+    const qBackup = query(itemCollection, where("_random", ">", seed), orderBy("_random"), limit(1));
+    const resBackup = await getDocs(qBackup);
+    if (resBackup.size > 0) {
+      return { code: 200, body: resBackup.docs[0].data() as DnDItem, message: "backup" };
+    } else {
+      return { code: 400, error: "Something went wrong while querying firestore for a random item" };
+    }
+  }
+}
