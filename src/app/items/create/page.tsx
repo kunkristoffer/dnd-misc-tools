@@ -111,9 +111,9 @@ export default function Page() {
             onChange={(e) => setItem((prev) => ({ ...prev, image: e.target.value }))}
             className="bg-foreground py-1 px-2 rounded"
           />
-          <span>
+          <span className="flex justify-around">
             <button type="button" onClick={() => setItem(formItemInit)} className="bg-red-500 p-2">
-              save
+              reset
             </button>
             <button type="button" onClick={handleSave} className="bg-green-500 p-2">
               save
