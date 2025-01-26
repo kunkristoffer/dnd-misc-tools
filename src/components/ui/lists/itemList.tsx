@@ -20,6 +20,8 @@ export function ItemList({ items }: ItemListProps) {
             <th>Rarity</th>
             <th>Type</th>
             <th>Subtype</th>
+            <th>created</th>
+            <th>updated</th>
             <th title="Homebrew item">🏠</th>
             <th title="Requires attunement">⌛</th>
             <th>Price</th>
@@ -36,6 +38,8 @@ export function ItemList({ items }: ItemListProps) {
               <td className={`${item.rarity}`}>{item.rarity}</td>
               <td>{item.type}</td>
               <td>{item.subType}</td>
+              <td>{item.createdAt?.toDate().toLocaleDateString()}</td>
+              <td>{item.updatedAt?.toDate().toLocaleDateString()}</td>
               <td>{item.homebrew && "🏠"}</td>
               <td>{item.attuned && "⌛"}</td>
               <td className="text-right pr-2">{item.price.toLocaleString()} 🪙</td>
