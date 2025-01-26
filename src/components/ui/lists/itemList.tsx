@@ -27,9 +27,9 @@ export function ItemList({ items }: ItemListProps) {
         </thead>
         <tbody>
           {items.map((item) => (
-            <tr key={item.id} className={`border rounded text-secondary border-background hover:bg-panel/50`}>
+            <tr key={item._id} className={`border rounded text-secondary border-background hover:bg-panel/50`}>
               <td className={`${item.rarity}`}>
-                <Link href={"/items/id/" + item.id} className="pl-2 hover:underline">
+                <Link href={"/items/id/" + item._id} className="pl-2 hover:underline">
                   {item.name}
                 </Link>
               </td>
