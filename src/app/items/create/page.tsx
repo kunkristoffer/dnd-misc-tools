@@ -11,6 +11,9 @@ export default function Page() {
 
   async function handleSave() {
     // Todo: add toast for item saved feedback
+    // On save, push route to edit item instead?
+    // or have a useState here that determines if item has been saved already
+    // then change fn to use edit instead...?
     const res = await createItem(item);
     if (res.data) {
       setItem((prev) => ({ ...prev, source: res.data }));
@@ -119,7 +122,7 @@ export default function Page() {
         </div>
         <div className="flex flex-col gap-2">
           <h1>item preview</h1>
-          <ItemPreview {...item} />
+          <ItemPreview item={{ ...item }} />
         </div>
       </div>
     </main>
