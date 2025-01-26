@@ -2,14 +2,33 @@
 
 import { ItemPreview } from "@/components/ui/cards/itemPreview";
 import { formItemInit } from "@/data/dnd/form";
-import { editItem, getItemById } from "@/lib/firebase/firestore/items";
+import { deleteItem, editItem, getItemById } from "@/lib/firebase/firestore/items";
 import { DnDItem, DnDItemRarity, DnDItemTypes } from "@/types/dnd/items.types";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Page() {
   const [item, setItem] = useState<DnDItem>(formItemInit);
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
   const uid = usePathname().split("/").pop();
+  const router = useRouter()
+
+  async function handleDelete() {
+    if (!uid || uid.length !== 20) return;
+
+    if (!deleteConfirm) return setDeleteConfirm(true);
+
+    if (deleteConfirm) {
+      const res = await deleteItem(uid);
+      if (res.code === 200) {
+        setDeleteConfirm(false)
+        setItem(formItemInit)
+        router.push("/items/create")
+      }
+    }
+
+    // redirect on success to create item?
+  }
 
   async function handleSave() {
     if (!uid || uid.length !== 20) return;
@@ -17,11 +36,13 @@ export default function Page() {
     console.log(res);
   }
 
+  // Update form input if item exists
   useEffect(() => {
     async function update() {
       if (!uid || uid.length !== 20) return;
       const result = await getItemById(uid);
       if (result.data) setItem((prev) => ({ ...prev, ...result.data }));
+      // todo redirect if item not found, means url is misspelled
     }
     update();
   }, [uid]);
@@ -119,12 +140,38 @@ export default function Page() {
             className="bg-foreground py-1 px-2 rounded"
           />
           <span>
-            <button type="button" onClick={() => setItem(formItemInit)} className="bg-red-500 p-2">
-              save
+            <button type="button" onClick={handleDelete} className="bg-red-500 p-2">
+              delete
             </button>
             <button type="button" onClick={handleSave} className="bg-green-500 p-2">
               save
             </button>
+          </span>
+          <span>
+            {deleteConfirm && (
+              <div className="z-50 fixed inset-0 top-10 backdrop-blur-sm backdrop-brightness-50 flex justify-center items-center">
+                <div className="flex flex-col items-center p-10 gap-4 rounded-md bg-panel">
+                  <h1>Youre about to delete this item, are you sure?</h1>
+                  <h2>There is no going back 😵</h2>
+                  <span className="flex justify-around w-full">
+                    <button
+                      type="button"
+                      className="bg-blue-500 px-4 py-2 rounded-md hover:scale-105 duration-200"
+                      onClick={() => setDeleteConfirm(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      className="bg-red-500 px-4 py-2 rounded-md hover:scale-105 duration-200"
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </button>
+                  </span>
+                </div>
+              </div>
+            )}
           </span>
         </div>
         <div className="flex flex-col gap-2">

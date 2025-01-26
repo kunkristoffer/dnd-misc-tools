@@ -14,6 +14,7 @@ import {
   Timestamp,
   setDoc,
   where,
+  deleteDoc,
 } from "firebase/firestore";
 import { clientAuth, clientDB } from "../app";
 import { userCollection } from "./users";
@@ -144,5 +145,15 @@ export async function randomItem() {
     } else {
       return { code: 400, error: "Something went wrong while querying firestore for a random item" };
     }
+  }
+}
+
+export async function deleteItem(uid: DnDItemId) {
+  // Obs! Deleting a document does not delete its subcollections!
+  try {
+    await deleteDoc(doc(itemCollection, uid));
+    return { code: 200, message: "Successfully deleted item with id: " + uid };
+  } catch (err) {
+    return { code: 500, error: err };
   }
 }
