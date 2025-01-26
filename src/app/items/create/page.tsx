@@ -16,7 +16,7 @@ export default function Page() {
     // then change fn to use edit instead...?
     const res = await createItem(item);
     if (res.data) {
-      setItem((prev) => ({ ...prev, source: res.data }));
+      setItem((prev) => ({ ...prev, ...res.data }));
     }
   }
   return (
