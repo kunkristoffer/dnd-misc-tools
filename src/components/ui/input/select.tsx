@@ -58,6 +58,10 @@ export function InputSelect({
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, []);
+
+  useEffect(() => {
+    setSelectedOptions(typeof value === "string" ? [value] : value);
+  }, [value]);
   return (
     <span className="w-full relative" title={title} ref={selectRef}>
       <input
@@ -78,7 +82,13 @@ export function InputSelect({
       {isOpen && (
         <ul className="z-10 absolute w-full rounded -translate-y-1 bg-panel border border-blue-500">
           {options.map((option, index) => (
-            <li key={index} className={`py-1 px-2 flex gap-2 items-center hover:bg-panel-hover ${selectedOptions.includes(option) && "bg-blue-600 hover:bg-blue-500"} ${option}`} onClick={() => toggleOption(option)}>
+            <li
+              key={index}
+              className={`py-1 px-2 flex gap-2 items-center hover:bg-panel-hover ${
+                selectedOptions.includes(option) && "bg-blue-600 hover:bg-blue-500"
+              } ${option}`}
+              onClick={() => toggleOption(option)}
+            >
               {option}
             </li>
           ))}
