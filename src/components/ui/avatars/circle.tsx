@@ -1,7 +1,8 @@
 import Image from "next/image";
+import placeholder from "@/assets/media/images/FrameRound.png";
 
 interface AvatarCircularProps {
-  href: string;
+  href?: string;
   size?: number;
   className?: React.ComponentProps<"img">["className"];
 }
@@ -9,7 +10,7 @@ interface AvatarCircularProps {
 export function AvatarCircular({ href, size, className }: AvatarCircularProps) {
   return (
     <Image
-      src={href}
+      src={href ?? placeholder}
       alt="An avatar picture"
       width={size ?? 24}
       height={size ?? 24}
