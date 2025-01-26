@@ -18,5 +18,5 @@ export default function Page() {
     }
     update();
   }, [uid]);
-  return <main>{item ? <ItemPreview {...item} /> : <p>Loading...</p>}</main>;
+  return <main>{item ? <ItemPreview item={{...item}} editable /> : <p>Loading...</p>}</main>;
 }
