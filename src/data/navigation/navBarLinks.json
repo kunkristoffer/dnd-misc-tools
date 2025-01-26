@@ -6,7 +6,6 @@
   {
     "label": "Items",
     "href": "/items",
-    "disabled": true,
     "subMenu": [
       {
         "label": "Random",
@@ -16,10 +15,6 @@
       {
         "label": "Create",
         "href": "/items/create"
-      },
-      {
-        "label": "List all",
-        "href": "/items/all/"
       },
       {
         "label": "Search",
