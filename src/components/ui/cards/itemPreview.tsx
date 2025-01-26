@@ -6,15 +6,17 @@ import { AvatarCircular } from "../avatars/circle";
 import { usePathname } from "next/navigation";
 // import { convertDateToAgo } from "@/utils/date";
 
-export function ItemPreview(item: DnDItem) {
+export function ItemPreview(item: DnDItem, editable?: boolean) {
   const uid = usePathname().split("/").pop();
   return (
-    <div className={`group relative flex flex-col gap-2 p-2 rounded ${item.rarity} text-primary border bg-panel`}>
+    <div
+      className={`group relative flex flex-col gap-2 p-2 min-w-64 min-h-64 rounded ${item.rarity} text-primary border bg-panel`}
+    >
       <span className="flex">
-        <h3 className="mr-auto font-bold text-xl capitalize">{item.name}</h3>
+        <h3 className={`mr-auto font-bold text-xl capitalize ${item.rarity}`}>{item.name ? item.name : "item name"}</h3>
         <span className="flex gap-2">
-          {!item.attuned && <p title="requires attunement">⌛</p>}
-          {!item.homebrew && <p title="home brew">🏠</p>}
+          {item.attuned && <p title="requires attunement">⌛</p>}
+          {item.homebrew && <p title="home brew">🏠</p>}
         </span>
       </span>
       <span className="flex gap-2">
@@ -23,9 +25,15 @@ export function ItemPreview(item: DnDItem) {
           {item.subType} {item.type}
         </p>
       </span>
-      <span className="text-gray-400 italic">{item.description}</span>
+      <span className="flex-1 text-gray-400 italic">{item.description}</span>
       <span className="flex justify-end">
-        <span className="flex mr-auto">
+        <span>
+          source:{" "}
+          <a href="/" target="_blank" rel="noopener noreferrer" className="text-blue-500">
+            link
+          </a>
+        </span>
+        <span className="flex mx-auto">
           {item.createdBy && (
             <span title={`Created ${item.createdAt?.toDate().toDateString()} by ${item.createdBy?.displayName}`}>
               <AvatarCircular href={item.createdBy?.photoURL} />
@@ -42,9 +50,13 @@ export function ItemPreview(item: DnDItem) {
           {item.price.toLocaleString()}
         </span>
       </span>
-      <span className={`opacity-0 group-hover:opacity-100 absolute px-2 rounded -bottom-3 left-1/2 -translate-x-1/2 border ${item.rarity} bg-panel hover:scale-110 duration-200`}>
-        <Link href={"/items/edit/" + (item.id ?? uid)}>Edit</Link>
-      </span>
+      {editable && (
+        <span
+          className={`opacity-0 group-hover:opacity-100 absolute px-2 rounded -bottom-3 left-1/2 -translate-x-1/2 border ${item.rarity} bg-panel hover:scale-110 duration-200`}
+        >
+          <Link href={"/items/edit/" + (item.id ?? uid)}>Edit</Link>
+        </span>
+      )}
     </div>
   );
 }
