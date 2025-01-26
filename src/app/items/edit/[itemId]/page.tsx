@@ -20,7 +20,7 @@ export default function Page() {
     async function update() {
       if (!uid || uid.length !== 20) return;
       const result = await getItemById(uid);
-      if (result.data) setItem(result.data);
+      if (result.data) setItem((prev) => ({ ...prev, ...result.data }));
     }
     update();
   }, [uid]);

@@ -23,6 +23,9 @@ export default function Page() {
             <Link href={`/items/id/${item.id}`} className="bg-secondary textp">
               open
             </Link>
+            <Link href={`/items/edit/${item.id}`} className="bg-secondary textp">
+              edit
+            </Link>
           </span>
         ))}
       </div>
