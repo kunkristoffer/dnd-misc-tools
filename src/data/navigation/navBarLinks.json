@@ -9,8 +9,7 @@
     "subMenu": [
       {
         "label": "Random",
-        "href": "/items/random",
-        "disabled": true
+        "href": "/items/random"
       },
       {
         "label": "Create",
