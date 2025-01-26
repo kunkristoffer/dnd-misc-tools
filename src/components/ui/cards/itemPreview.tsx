@@ -6,7 +6,12 @@ import { AvatarCircular } from "../avatars/circle";
 import { usePathname } from "next/navigation";
 // import { convertDateToAgo } from "@/utils/date";
 
-export function ItemPreview(item: DnDItem, editable?: boolean) {
+interface ItemPreviewProps {
+  item: DnDItem;
+  editable?: boolean;
+}
+
+export function ItemPreview({ item, editable = false }: ItemPreviewProps) {
   const uid = usePathname().split("/").pop();
   return (
     <div
@@ -52,7 +57,7 @@ export function ItemPreview(item: DnDItem, editable?: boolean) {
       </span>
       {editable && (
         <span
-          className={`opacity-0 group-hover:opacity-100 absolute px-2 rounded -bottom-3 left-1/2 -translate-x-1/2 border ${item.rarity} bg-panel hover:scale-110 duration-200`}
+          className={`opacity-0 group-hover:opacity-100 absolute px-2 rounded -bottom-4 left-1/2 -translate-x-1/2 border ${item.rarity} bg-panel hover:scale-110 duration-200`}
         >
           <Link href={"/items/edit/" + (item.id ?? uid)}>Edit</Link>
         </span>
