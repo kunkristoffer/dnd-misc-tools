@@ -16,8 +16,8 @@ export type DnDItem = {
   image?: string;
   createdBy?: FirestoreUser;
   createdByRef?: DocumentReference;
-  createdAt?: Date & Timestamp;
-  updatedAt?: Date & Timestamp;
+  createdAt?: Date | Timestamp;
+  updatedAt?: Date | Timestamp;
   updatedBy?: FirestoreUser;
   updatedByRef?: DocumentReference;
   homebrew?: boolean;

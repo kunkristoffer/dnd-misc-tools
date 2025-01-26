@@ -54,17 +54,15 @@ export async function editItem(item: DnDItem, uid: string) {
   return { code: 200, data: result ?? item };
 }
 
-export async function getAllItems({ dir, end, order = "name", start }: GetAllItems) {
+export async function getAllItems({ order = "name", start }: GetAllItems) {
   // Create query
   const q = query(itemCollection, orderBy(order), startAfter(start ?? 0), limit(50));
 
   // Get current set of documents
   const results = await getDocs(q);
-  const data = results.docs.map(item => {
-    return {id: item.id, ...item.data()} as DnDItem
-  })
-
-
+  const data = results.docs.map((item) => {
+    return { id: item.id, ...item.data() } as DnDItem;
+  });
 
   // logic for pagination here :)
 

@@ -1,4 +1,4 @@
-import { DnDItem, DnDItemTypes, iDnDsubtypesValues } from "@/types/dnd/items.types";
+import { DnDItem, DnDItemTypes } from "@/types/dnd/items.types";
 
 // prettier-ignore
 export const formAvailableRarity = [ "mundane", "common", "uncommon", "rare", "very-rare", "legendary", "artifact", ] as const;
@@ -25,9 +25,9 @@ export function formGetSubTypes(type: DnDItemTypes) {
   }
 }
 
-export function formGetBases(subtypes: iDnDsubtypesValues[]) {
+/* export function formGetBases(subtypes: iDnDsubtypesValues[]) {
   // todo subtypes
-}
+} */
 
 export const formItemInit: DnDItem = {
   name: "",

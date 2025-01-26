@@ -7,7 +7,7 @@ interface ItemListProps {
   available: number;
 }
 
-export function ItemList({ page, available, items }: ItemListProps) {
+export function ItemList({ items }: ItemListProps) {
   // Todo: pagination
   // Todo: add sorting buttons
   // Todo: use search params https://nextjs.org/docs/app/api-reference/functions/use-search-params
