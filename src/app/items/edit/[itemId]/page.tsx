@@ -54,7 +54,7 @@ export default function Page() {
   return (
     <main>
       <div className="flex justify-between gap-12">
-        <div className="p-2 rounded-md bg-foreground">
+        <div className={`p-2 flex gap-2 rounded-md bg-foreground`}>
           <div className="flex flex-col gap-2 w-48">
             <InputText
               name="name"
@@ -161,6 +161,12 @@ export default function Page() {
                 </div>
               )}
             </span>
+          </div>
+          <div
+            className={`relative w-32 rounded bg-input`}
+          >
+            <p className="absolute left-2 -top-2 text-xs text-secondary">Item bases</p>
+            <p className="w-full px-2 text-pretty">Finn en måte å gjemme meg vekk på som kan animeres :)</p>
           </div>
         </div>
         <div className="flex flex-col gap-2">
