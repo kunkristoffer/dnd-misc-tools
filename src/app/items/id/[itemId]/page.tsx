@@ -1,5 +1,6 @@
 "use client";
 
+import { ItemPreview } from "@/components/ui/cards/itemPreview";
 import { getItemById } from "@/lib/firebase/firestore/items";
 import { DnDItem } from "@/types/dnd/items.types";
 import { usePathname } from "next/navigation";
@@ -17,9 +18,5 @@ export default function Page() {
     }
     update();
   }, [uid]);
-  return (
-    <main>
-      <pre className="py-1 px-2 text-wrap">{JSON.stringify(item, null, 2)}</pre>
-    </main>
-  );
+  return <main>{item ? <ItemPreview {...item} /> : <p>Loading...</p>}</main>;
 }
