@@ -9,14 +9,14 @@ export function convertDateToAgo(dateInput: string | Date) {
     { amount: 4.34524, name: "weeks" },
     { amount: 12, name: "months" },
     { amount: Number.POSITIVE_INFINITY, name: "years" },
-  ]
+  ];
 
-  let duration = (date.getTime() - new Date().getTime()) / 1000
+  let duration = (date.getTime() - new Date().getTime()) / 1000;
   for (let i = 0; i < DIVISIONS.length; i++) {
-    const division = DIVISIONS[i]
+    const division = DIVISIONS[i];
     if (Math.abs(duration) < division.amount) {
-      return rtf.format(Math.round(duration), division.name as Intl.RelativeTimeFormatUnit)
+      return rtf.format(Math.round(duration), division.name as Intl.RelativeTimeFormatUnit);
     }
-    duration /= division.amount
+    duration /= division.amount;
   }
 }
