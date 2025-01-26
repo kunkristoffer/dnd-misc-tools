@@ -6,10 +6,12 @@
   {
     "label": "Items",
     "href": "/items",
+    "disabled": true,
     "subMenu": [
       {
         "label": "Random",
-        "href": "/items/random"
+        "href": "/items/random",
+        "disabled": true
       },
       {
         "label": "Create",
@@ -21,29 +23,35 @@
       },
       {
         "label": "Search",
-        "href": "/items/search"
+        "href": "/items/search",
+        "disabled": true
       }
     ]
   },
   {
     "label": "Shop",
     "href": "/shops",
+    "disabled": true,
     "subMenu": [
       {
         "label": "Random",
-        "href": "/shops/random"
+        "href": "/shops/random",
+        "disabled": true
       },
       {
         "label": "Create",
-        "href": "/shops/create"
+        "href": "/shops/create",
+        "disabled": true
       },
       {
         "label": "List all",
-        "href": "/shops/all/"
+        "href": "/shops/all/",
+        "disabled": true
       },
       {
         "label": "Search",
-        "href": "/shops/search"
+        "href": "/shops/search",
+        "disabled": true
       }
     ]
   },
