@@ -39,11 +39,6 @@
         "disabled": true
       },
       {
-        "label": "List all",
-        "href": "/shops/all/",
-        "disabled": true
-      },
-      {
         "label": "Search",
         "href": "/shops/search",
         "disabled": true
