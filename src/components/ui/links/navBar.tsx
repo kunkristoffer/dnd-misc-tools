@@ -20,7 +20,7 @@ export function NavBarLink({ href, label, subMenu, disabled }: NavBarLinkProps) 
           {subMenu.map((item, index) => (
             <Link
               key={`${item.label}${index}`}
-              href={item.href}
+              href={item.disabled ? "/comingsoon" : item.href}
               className="p-2 text-secondary hover:underline hover:text-primary"
             >
               {item.label}
