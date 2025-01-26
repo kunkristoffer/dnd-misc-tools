@@ -36,8 +36,8 @@ export function ItemList({ page, available, items }: ItemListProps) {
               <td className={`${item.rarity}`}>{item.rarity}</td>
               <td>{item.type}</td>
               <td>{item.subType}</td>
-              <td>{item.homebrew}</td>
-              <td>{item.attuned}</td>
+              <td>{item.homebrew && "🏠"}</td>
+              <td>{item.attuned && "⌛"}</td>
               <td className="text-right pr-2">{item.price.toLocaleString()} 🪙</td>
             </tr>
           ))}
