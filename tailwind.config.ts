@@ -16,6 +16,16 @@ export default {
         secondary: "#778da9",
       },
     },
+    keyframes: {
+      sway: {
+        "0%": { transform: "rotate(-6deg)" },
+        "50%": { transform: "rotate(6deg)" },
+        "100%": { transform: "rotate(-6deg)" },
+      },
+    },
+    animation: {
+      'swaying': 'sway 8s infinite',
+    },
   },
   plugins: [],
 } satisfies Config;
