@@ -4,10 +4,12 @@ import { ItemPreview } from "@/components/ui/cards/itemPreview";
 import { formItemInit } from "@/data/dnd/form";
 import { createItem } from "@/lib/firebase/firestore/items";
 import { DnDItem, DnDItemRarity, DnDItemTypes } from "@/types/dnd/items.types";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Page() {
   const [item, setItem] = useState<DnDItem>(formItemInit);
+  const router = useRouter();
 
   async function handleSave() {
     // Todo: add toast for item saved feedback
@@ -15,8 +17,9 @@ export default function Page() {
     // or have a useState here that determines if item has been saved already
     // then change fn to use edit instead...?
     const res = await createItem(item);
-    if (res.data) {
-      setItem((prev) => ({ ...prev, ...res.data }));
+    if (res.code === 200) {
+      setItem(formItemInit);
+      router.push("/items/edit/" + res.data?._id);
     }
   }
   return (
