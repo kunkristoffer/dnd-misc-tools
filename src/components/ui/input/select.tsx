@@ -85,7 +85,7 @@ export function InputSelect({
               key={index}
               className={`py-1 px-2 flex gap-2 items-center ${
                 selectedOptions.includes(option) ? "bg-blue-600 hover:bg-blue-500" : " hover:bg-panel-hover"
-              }  ${option}`}
+              }  ${option} select-none`}
               onClick={() => toggleOption(option)}
             >
               {option}
