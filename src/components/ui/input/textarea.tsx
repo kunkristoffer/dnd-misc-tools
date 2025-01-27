@@ -4,12 +4,13 @@ interface InputTextareaProps {
   value: string;
   title?: string;
   disabled?: boolean;
+  className?: React.ComponentProps<'span'>['className']
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export function InputTextarea({ name, label, value, title, disabled = false, onChange }: InputTextareaProps) {
+export function InputTextarea({ name, label, value, title, disabled = false, className, onChange }: InputTextareaProps) {
   return (
-    <span className="w-full relative" title={title}>
+    <span className={`w-full relative ${className}`} title={title}>
       <textarea
         name={name}
         value={value}
