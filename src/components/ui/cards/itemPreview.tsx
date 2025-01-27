@@ -118,7 +118,7 @@ export function ItemPreview({ item, editable = false }: ItemPreviewProps) {
         <span
           className={`opacity-0 group-hover:opacity-100 absolute px-2 rounded -bottom-4 left-1/2 -translate-x-1/2 border ${item.rarity} bg-panel hover:scale-110 duration-200`}
         >
-          <Link href={"/items/edit/" + (item._id ?? uid)}>Edit</Link>
+          <Link href={"/items/edit/" + (item.id ?? uid)}>Edit</Link>
         </span>
       )}
     </div>

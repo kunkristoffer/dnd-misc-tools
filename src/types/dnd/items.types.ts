@@ -3,8 +3,8 @@ import { DocumentReference, Timestamp } from "firebase/firestore";
 import { FirestoreUser } from "../auth.types";
 
 export type DnDItem = {
-  _id?: string;
-  _random?: number;
+  id?: string;
+  random?: number;
   name: string;
   attuned: boolean;
   rarity: DnDItemRarity;
