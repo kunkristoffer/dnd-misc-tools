@@ -6,20 +6,14 @@
   {
     "label": "Items",
     "href": "/items",
-    "disabled": true,
     "subMenu": [
       {
         "label": "Random",
-        "href": "/items/random",
-        "disabled": true
+        "href": "/items/random"
       },
       {
         "label": "Create",
         "href": "/items/create"
-      },
-      {
-        "label": "List all",
-        "href": "/items/all/"
       },
       {
         "label": "Search",
@@ -41,11 +35,6 @@
       {
         "label": "Create",
         "href": "/shops/create",
-        "disabled": true
-      },
-      {
-        "label": "List all",
-        "href": "/shops/all/",
         "disabled": true
       },
       {

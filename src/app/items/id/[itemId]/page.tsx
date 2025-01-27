@@ -1,6 +1,7 @@
 "use client";
 
 import { ItemPreview } from "@/components/ui/cards/itemPreview";
+import { LoadingTextSpinner } from "@/components/ui/loading/textSpinner";
 import { getItemById } from "@/lib/firebase/firestore/items";
 import { DnDItem } from "@/types/dnd/items.types";
 import { usePathname } from "next/navigation";
@@ -18,5 +19,5 @@ export default function Page() {
     }
     update();
   }, [uid]);
-  return <main>{item ? <ItemPreview item={{...item}} editable /> : <p>Loading...</p>}</main>;
+  return <main>{item ? <ItemPreview item={{ ...item }} editable /> : <LoadingTextSpinner />}</main>;
 }
