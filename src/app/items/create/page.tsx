@@ -46,7 +46,7 @@ export default function Page() {
     const res = await createItem(item);
     if (res.code === 200) {
       setItem(formItemInit);
-      router.push("/items/edit/" + res.data?._id);
+      router.push("/items/edit/" + res.data?.id);
     }
   }
 

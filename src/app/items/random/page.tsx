@@ -7,11 +7,14 @@ import { useEffect } from "react";
 
 export default function Page() {
   const router = useRouter();
+
   useEffect(() => {
     async function getRandom() {
       const result = await randomItem();
-      if (result.body?._id) {
-        router.push("/items/id/" + result.body._id);
+      if (result.body?.id) {
+        router.push("/items/id/" + result.body.id);
+      } else {
+        router.push("/items/id/error");
       }
     }
     getRandom();
