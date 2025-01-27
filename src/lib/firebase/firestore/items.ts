@@ -131,21 +131,18 @@ export async function randomItem() {
   const seed = Math.floor(Math.random() * 100000000);
 
   // Split collection @ seed, get [0]
-  const q = query(itemCollection, where("random", "<=", seed), orderBy("random"), limit(1));
+  const q = query(itemCollection, where("random", ">=", seed), orderBy("random"), limit(1));
   const res = await getDocs(q);
 
   // Return found, if none found, look in other direction
   if (res.size > 0) {
-    console.log("first", res.docs[0].data())
     return { code: 200, body: res.docs[0].data() as DnDItem, message: "first" };
   } else {
-    const qBackup = query(itemCollection, where("random", ">", seed), orderBy("random"), limit(1));
+    const qBackup = query(itemCollection, where("random", "<", seed), orderBy("random"), limit(1));
     const resBackup = await getDocs(qBackup);
     if (resBackup.size > 0) {
-      console.log("second", res.docs[0].data())
       return { code: 200, body: resBackup.docs[0].data() as DnDItem, message: "backup" };
     } else {
-      console.log("thrist")
       return { code: 400, error: "Something went wrong while querying firestore for a random item" };
     }
   }
