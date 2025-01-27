@@ -122,7 +122,7 @@ export default function Page() {
                 label="Item subtype"
                 value={item.subType}
                 options={formGetSubTypes(item.type)}
-                multiple
+                multiple={item.type.includes("fix")}
                 onChange={(value) => setItem((prev) => ({ ...prev, subType: value as string[], bases: [] }))}
               />
             )}
@@ -182,19 +182,9 @@ export default function Page() {
               name="description"
               label="Item description"
               value={item.description ?? ""}
+              className="flex-1"
               onChange={(e) => setItem((prev) => ({ ...prev, description: e.target.value }))}
             />
-            <span className="flex text-sm">
-              <button type="button" onClick={handleDelete} className="flex-1 px-2 py-1 rounded-l bg-red-600 hover:bg-red-500">
-                delete
-              </button>
-              <button type="button" disabled className="flex-1 px-2 py-1 bg-blue-600 hover:bg-blue-500">
-                generate
-              </button>
-              <button type="button" onClick={handleSave} className="flex-1 px-2 py-1 rounded-r bg-green-600 hover:bg-green-500">
-                update
-              </button>
-            </span>
             <span>
               {deleteConfirm && (
                 <div className="z-50 fixed inset-0 top-10 backdrop-blur-sm backdrop-brightness-50 flex justify-center items-center">
@@ -220,6 +210,17 @@ export default function Page() {
                   </div>
                 </div>
               )}
+            </span>
+            <span className="flex text-sm">
+              <button type="button" onClick={handleDelete} className="flex-1 px-2 py-1 rounded-l bg-red-600 hover:bg-red-500">
+                delete
+              </button>
+              <button type="button" disabled className="flex-1 px-2 py-1 bg-blue-600 hover:bg-blue-500">
+                generate
+              </button>
+              <button type="button" onClick={handleSave} className="flex-1 px-2 py-1 rounded-r bg-green-600 hover:bg-green-500">
+                update
+              </button>
             </span>
           </div>
           {showBases && (
