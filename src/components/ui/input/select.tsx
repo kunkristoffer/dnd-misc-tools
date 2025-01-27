@@ -84,9 +84,9 @@ export function InputSelect({
           {options.map((option, index) => (
             <li
               key={index}
-              className={`py-1 px-2 flex gap-2 items-center hover:bg-panel-hover ${
-                selectedOptions.includes(option) && "bg-blue-600 hover:bg-blue-500"
-              } ${option}`}
+              className={`py-1 px-2 flex gap-2 items-center ${
+                selectedOptions.includes(option) ? "bg-blue-600 hover:bg-blue-500" : " hover:bg-panel-hover"
+              }  ${option}`}
               onClick={() => toggleOption(option)}
             >
               {option}
