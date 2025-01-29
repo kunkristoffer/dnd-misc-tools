@@ -12,7 +12,7 @@ import { itemFormSchema, ItemFormSchemaErrors } from "@/schemas/dnd/item";
 import { DnDItem, DnDItemRarity, DnDItemTypes } from "@/types/dnd/items.types";
 import { stringArrayAddOrRemove } from "@/utils/array";
 import { ArrowLeftToLine, ArrowRightFromLine } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Page() {
@@ -20,7 +20,6 @@ export default function Page() {
   const [errors, setErrors] = useState<ItemFormSchemaErrors>();
   const [showBases, setShowBases] = useState(true);
   const [availableBases, setAvailableBases] = useState<{ label: string; value: string[] }[]>([]);
-  const uid = usePathname().split("/").pop();
   const router = useRouter();
 
   // Ugly hack for multi toggle, some voodo shit going on here :/
@@ -59,17 +58,6 @@ export default function Page() {
       }
     }
   }
-
-  // Update form input if item exists
-  useEffect(() => {
-    async function update() {
-      if (!uid || uid.length !== 20) return;
-      const result = await getItemById(uid);
-      if (result.data) setItem((prev) => ({ ...prev, ...result.data }));
-      // todo redirect if item not found, means url is misspelled
-    }
-    update();
-  }, [uid]);
 
   // Update available items on subtype change
   useEffect(() => {
