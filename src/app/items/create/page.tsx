@@ -7,7 +7,7 @@ import { InputSelect } from "@/components/ui/input/select";
 import { InputText } from "@/components/ui/input/text";
 import { InputTextarea } from "@/components/ui/input/textarea";
 import { formAvailableRarity, formAvailableTypes, formGetBases, formGetSubTypes, formItemInit } from "@/data/dnd/form";
-import { createItem, getItemById } from "@/lib/firebase/firestore/items";
+import { createItem } from "@/lib/firebase/firestore/items";
 import { itemFormSchema, ItemFormSchemaErrors } from "@/schemas/dnd/item";
 import { DnDItem, DnDItemRarity, DnDItemTypes } from "@/types/dnd/items.types";
 import { stringArrayAddOrRemove } from "@/utils/array";
