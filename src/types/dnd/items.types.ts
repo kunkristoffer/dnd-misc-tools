@@ -7,6 +7,7 @@ export type DnDItem = {
   random?: number;
   name: string;
   attuned: boolean;
+  homebrew: boolean;
   rarity: DnDItemRarity;
   type: DnDItemTypes;
   subType: string[];
@@ -21,7 +22,6 @@ export type DnDItem = {
   updatedAt?: Timestamp;
   updatedBy?: FirestoreUser;
   updatedByRef?: DocumentReference;
-  homebrew?: boolean;
 };
 
 export type DnDItemId = string;
