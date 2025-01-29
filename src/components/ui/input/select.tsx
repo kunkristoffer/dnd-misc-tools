@@ -8,6 +8,7 @@ interface InputSelectProps {
   value: string | string[];
   options: string[] | readonly string[];
   title?: string;
+  error?: string[];
   disabled?: boolean;
   multiple?: boolean;
   onChange: (value: string | string[]) => void;
@@ -19,6 +20,7 @@ export function InputSelect({
   value,
   options,
   title,
+  error,
   multiple = false,
   disabled = false,
   onChange,
@@ -69,15 +71,16 @@ export function InputSelect({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full px-2 py-1 rounded bg-input outline-none ${value}`}
+        className={`w-full py-2 px-3 rounded bg-input outline-none ${value}`}
       />
       <label
-        className={`absolute left-2 top-1 text-secondary duration-300 ${
-          value && "-translate-y-3 text-xs peer-focus:text-primary"
+        className={`absolute left-3 top-2 text-secondary duration-300 ${
+          value && "-translate-y-4 -translate-x-2 text-xs peer-focus:text-primary"
         } pointer-events-none`}
       >
         {label} {disabled && "(disabled)"}
       </label>
+      <p className="absolute -bottom-2 w-full text-red-600 text-xs text-nowrap text-center">{error}</p>
       {isOpen && (
         <ul className="z-10 absolute w-full rounded -translate-y-1 bg-panel border border-blue-500">
           {options.map((option, index) => (
