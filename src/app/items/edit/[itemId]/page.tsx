@@ -8,6 +8,7 @@ import { InputText } from "@/components/ui/input/text";
 import { InputTextarea } from "@/components/ui/input/textarea";
 import { formAvailableRarity, formAvailableTypes, formGetBases, formGetSubTypes, formItemInit } from "@/data/dnd/form";
 import { deleteItem, editItem, getItemById } from "@/lib/firebase/firestore/items";
+import { itemFormSchema, ItemFormSchemaErrors } from "@/schemas/dnd/item";
 import { DnDItem, DnDItemRarity, DnDItemTypes } from "@/types/dnd/items.types";
 import { stringArrayAddOrRemove } from "@/utils/array";
 import { ArrowLeftToLine, ArrowRightFromLine } from "lucide-react";
@@ -16,6 +17,7 @@ import { useEffect, useState } from "react";
 
 export default function Page() {
   const [item, setItem] = useState<DnDItem>(formItemInit);
+  const [errors, setErrors] = useState<ItemFormSchemaErrors>();
   const [showBases, setShowBases] = useState(true);
   const [availableBases, setAvailableBases] = useState<{ label: string; value: string[] }[]>([]);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
@@ -61,8 +63,19 @@ export default function Page() {
 
   async function handleSave() {
     if (!uid || uid.length !== 20) return;
-    const res = await editItem(item, uid);
-    console.log(res);
+
+    const validation = itemFormSchema.safeParse(item);
+    if (validation.error) {
+      setErrors(validation.error?.format());
+    }
+    if (validation.success) {
+      setErrors(undefined);
+      const res = await editItem(item, uid);
+      if (res.code === 200) {
+        setItem(formItemInit);
+        router.push("/items/edit/" + res.data?.id);
+      }
+    }
   }
 
   // Update form input if item exists
@@ -76,19 +89,20 @@ export default function Page() {
     update();
   }, [uid]);
 
+  // Update available items on subtype change
   useEffect(() => {
     if (item.subType) {
-      setAvailableBases(formGetBases(item.subType));
+      const result = formGetBases(item.subType);
+
+      if (result.length === 0) {
+        setShowBases(false);
+      } else {
+        setShowBases(true);
+      }
+
+      setAvailableBases(result);
     }
   }, [item.subType]);
-
-  useEffect(()=>{
-    if (availableBases.length === 0) {
-      setShowBases(false)
-    } else {
-      setShowBases(true)
-    }
-  }, [availableBases])
   return (
     <main>
       <div className="flex justify-between gap-12">
@@ -98,6 +112,7 @@ export default function Page() {
               name="name"
               label="Item name"
               value={item.name}
+              error={errors?.name?._errors}
               onChange={(e) => setItem((prev) => ({ ...prev, name: e.target.value }))}
             />
             <InputSelect
@@ -105,6 +120,7 @@ export default function Page() {
               label="Item rarity"
               value={item.rarity}
               options={formAvailableRarity}
+              error={errors?.rarity?._errors}
               onChange={(value) => setItem((prev) => ({ ...prev, rarity: value as DnDItemRarity }))}
             />
             <InputSelect
@@ -112,26 +128,35 @@ export default function Page() {
               label="Item type"
               value={item.type}
               options={formAvailableTypes}
+              error={errors?.type?._errors}
               onChange={(value) =>
                 setItem((prev) => ({ ...prev, type: value as DnDItemTypes, subType: [], bases: [] }))
               }
             />
-            {item.type && (
+            {item.type && !(item.type === "ammo" || item.type === "trinket") && (
               <InputSelect
                 name="subType"
                 label="Item subtype"
                 value={item.subType}
+                error={errors?.subType?._errors}
                 options={formGetSubTypes(item.type)}
                 multiple={item.type.includes("fix")}
-                onChange={(value) => setItem((prev) => ({ ...prev, subType: value as string[], bases: [] }))}
+                onChange={(value) =>
+                  setItem((prev) => ({
+                    ...prev,
+                    subType: (item.type.includes("fix") ? value : [value]) as string[],
+                    bases: [],
+                  }))
+                }
               />
             )}
-            {item.subType && (
+            {item.subType.length > 0 && item.subType[0] !== "" && (
               <span className="flex gap-2">
                 <InputText
                   name="bases"
                   label="Item bases"
                   value={item.bases.join(", ")}
+                  error={errors?.bases?._errors}
                   onChange={(e) => setItem((prev) => ({ ...prev, bases: e.target.value.split(", ") }))}
                 />
                 <button
@@ -163,12 +188,14 @@ export default function Page() {
               name="name"
               label="Item price"
               value={item.price}
+              error={errors?.price?._errors}
               onChange={(e) => setItem((prev) => ({ ...prev, price: Number(e.target.value) }))}
             />
             <InputText
               name="source"
               label="Item source"
               value={item.source ?? ""}
+              error={errors?.source?._errors}
               onChange={(e) => setItem((prev) => ({ ...prev, source: e.target.value }))}
             />
             <InputText
@@ -176,6 +203,7 @@ export default function Page() {
               label="Item image"
               disabled
               value={item.image ?? ""}
+              error={errors?.image?._errors}
               onChange={(e) => setItem((prev) => ({ ...prev, image: e.target.value }))}
             />
             <InputTextarea
@@ -183,6 +211,7 @@ export default function Page() {
               label="Item description"
               value={item.description ?? ""}
               className="flex-1"
+              error={errors?.description?._errors}
               onChange={(e) => setItem((prev) => ({ ...prev, description: e.target.value }))}
             />
             <span>
@@ -212,13 +241,21 @@ export default function Page() {
               )}
             </span>
             <span className="flex text-sm">
-              <button type="button" onClick={handleDelete} className="flex-1 px-2 py-1 rounded-l bg-red-600 hover:bg-red-500">
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="flex-1 px-2 py-1 rounded-l bg-red-600 hover:bg-red-500"
+              >
                 delete
               </button>
               <button type="button" disabled className="flex-1 px-2 py-1 bg-blue-600 hover:bg-blue-500">
                 generate
               </button>
-              <button type="button" onClick={handleSave} className="flex-1 px-2 py-1 rounded-r bg-green-600 hover:bg-green-500">
+              <button
+                type="button"
+                onClick={handleSave}
+                className="flex-1 px-2 py-1 rounded-r bg-green-600 hover:bg-green-500"
+              >
                 update
               </button>
             </span>
