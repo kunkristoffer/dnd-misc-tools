@@ -120,7 +120,7 @@ export default function Page() {
                 }
               />
             )}
-            {item.subType.length > 0 && item.subType[0] !== "" && (
+            {item.subType.length > 0 && item.subType[0] !== "" && item.type !== "wearables" && (
               <span className="flex gap-2">
                 <InputText
                   name="bases"
