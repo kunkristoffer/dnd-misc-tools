@@ -16,7 +16,7 @@ export function NavBarLink({ href, label, subMenu, disabled }: NavBarLinkProps) 
     <span className="relative group flex justify-center items-center py-2 w-24 hover:bg-panel duration-100">
       <Link href={disabled ? "/comingsoon" : href}>{label}</Link>
       {subMenu && (
-        <div className="absolute hidden group-hover:flex flex-col left-0 right-0 top-10 bg-panel">
+        <div className="absolute hidden group-hover:flex flex-col left-0 right-0 top-10 rounded-b-md bg-panel group-hover:shadow-2xl shadow-background">
           {subMenu.map((item, index) => (
             <Link
               key={`${item.label}${index}`}
