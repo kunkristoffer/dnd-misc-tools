@@ -1,0 +1,9 @@
+export const weaponSimpleMelee = ["club", "dagger", "greatclub", "handaxe", "javelin", "light hammer", "mace", "quarterstaff", "sickle", "spear" ];
+export const weaponSimpleRanged = ["boomerang", "light crossbow", "dart", "shortbow", "sling"];
+export const weaponMartialMelee = ["battleaxe", "flail", "glaive", "greataxe", "greatsword", "halberd", "lance", "longsword", "maul", "morningstar", "pike", "rapier", "scimitar", "shortsword", "trident", "war", "warhammer", "whip" ]
+export const weaponMartialRanged = ["blowgun", "heavy crossbow", "hand crossbow", "longbow", "net"]
+export const armorLight = ["padded", "leather", "studded leather"]
+export const armorMedium = ["hide", "chain shirt", "scale mail", "breastplate", "half plate"]
+export const armorHeavy = ["ring mail", "chain mail", "splint", "plate"]
+export const shield = ["shield"]
+export const ammunition = ['arrows', 'bolts', 'bullets', 'shells', 'ammunition']

@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const itemFormSchema = z
   .object({
-    name: z.string({ required_error: "Item must have a name" }).min(3, { message: "Item name is too short" }).trim(),
+    name: z.string({ required_error: "Item must have a name" }).min(2, { message: "Item name is too short" }).trim(),
     attuned: z.boolean(),
     homebrew: z.boolean(),
     rarity: z.enum(formAvailableRarity, { message: "Item rarity is required" }),

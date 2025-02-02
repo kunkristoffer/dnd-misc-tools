@@ -103,7 +103,7 @@ export default function Page() {
                 setItem((prev) => ({ ...prev, type: value as DnDItemTypes, subType: [], bases: [] }))
               }
             />
-            {item.type && !(item.type === "ammo" || item.type === "trinket") && (
+            {item.type && item.type !== "trinket" && (
               <InputSelect
                 name="subType"
                 label="Item subtype"

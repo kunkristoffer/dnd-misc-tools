@@ -19,9 +19,9 @@ export function ItemList({ items }: ItemListProps) {
             <th>Name</th>
             <th>Rarity</th>
             <th>Type</th>
-            <th>Subtype</th>
-            <th>created</th>
-            <th>updated</th>
+            <th className="hidden sm:table-cell">Subtype</th>
+            <th className="hidden md:table-cell">created</th>
+            <th className="hidden md:table-cell">updated</th>
             <th title="Homebrew item">🏠</th>
             <th title="Requires attunement">⌛</th>
             <th>Price</th>
@@ -37,9 +37,11 @@ export function ItemList({ items }: ItemListProps) {
               </td>
               <td className={`${item.rarity}`}>{item.rarity}</td>
               <td>{item.type}</td>
-              <td>{item.subType}</td>
-              <td>{item.createdAt?.toDate().toLocaleDateString()}</td>
-              <td>{item.updatedAt?.toDate().toLocaleDateString()}</td>
+              <td className="text-ellipsis hidden sm:table-cell">
+                {typeof item.subType === "string" ? item.subType : item.subType.join(", ")}
+              </td>
+              <td className="hidden md:table-cell">{item.createdAt?.toDate().toLocaleDateString()}</td>
+              <td className="hidden md:table-cell">{item.updatedAt?.toDate().toLocaleDateString()}</td>
               <td>{item.homebrew && "🏠"}</td>
               <td>{item.attuned && "⌛"}</td>
               <td className="text-right pr-2">{item.price.toLocaleString()} 🪙</td>
